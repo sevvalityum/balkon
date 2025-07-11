@@ -157,3 +157,202 @@ function setupMenuLinks() {
     });
   });
 }
+// --- Bu Hafta Ne Yapıyoruz ---
+
+const bulusmaVerileri = {
+  sehirler: ["Ankara", "İstanbul", "Eskişehir", "Kim Bilir?"],
+  icMekan: ["AVM", "Sinema", "Tiyatro", "Sergi", "Müze", "Kutu Oyunları", "Hobi Atölyeleri", "Cafe", "Sürekli Dizi Maratonu"],
+  disMekanGenel: ["Piknik", "Voleybol", "Badminton", "Yürüyüş Rotası", "Kamp", "Konser", "Fotoğraf Çekme Buluşması"],
+  disMekanIst: ["Vapur", "Pierre Loti", "Maçka Parkı", "Eyüpsultan", "Balat", "Kadıköy turu", "Yıldız Teknik Beşiktaş Kampüsü", "Beylerbeyi Sarayı", "Yıldız Sarayı", "Galata Kulesi", "Yerebatan Sarnıcı"],
+  disMekanAnk: ["Ayaş", "Anıtkabir", "7. Cadde", "Kuğulu Park", "Gençlik Parkı", "Bahçelievler", "Mogan", "ESAT Mahallesi"],
+  disMekanEsk: ["Barlar Sokağı", "Karnaval", "VR", "Pamukşekerli Türk Kahvecisi"]
+};
+
+function startBulusmaPlanlama() {
+  const container = document.getElementById("interactive-steps");
+  container.innerHTML = "";
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = "";
+
+  let secimler = {};
+
+  // Soru 1: Nerede buluşalım?
+  const soru1 = document.createElement("div");
+  soru1.innerHTML = `<h3>1. Nerede Buluşalım?</h3>`;
+  bulusmaVerileri.sehirler.forEach(sehir => {
+    const btn = document.createElement("button");
+    btn.textContent = sehir;
+    btn.className = "button";
+    btn.onclick = () => {
+      secimler.sehir = sehir;
+      soru1.style.display = "none";
+      soru2.style.display = "block";
+      renderSoru2(sehir);
+    };
+    soru1.appendChild(btn);
+  });
+  container.appendChild(soru1);
+
+  // Soru 2: Nasıl bir buluşma olsun? (Dış / İç mekan)
+  const soru2 = document.createElement("div");
+  soru2.style.display = "none";
+  soru2.innerHTML = `<h3>2. Nasıl bir buluşma olsun?</h3>`;
+
+  ["Dış Mekan", "İç Mekan"].forEach(tur => {
+    const btn = document.createElement("button");
+    btn.textContent = tur;
+    btn.className = "button";
+    btn.onclick = () => {
+      secimler.tur = tur;
+      soru2.style.display = "none";
+      renderSoru3(secimler.sehir, tur);
+    };
+    soru2.appendChild(btn);
+  });
+  container.appendChild(soru2);
+
+  // Soru 3: Mekan seçenekleri (dinamik, şehir ve tur bazlı)
+  function renderSoru2(sehir) {
+    soru2.style.display = "block";
+  }
+
+  function renderSoru3(sehir, tur) {
+    const soru3 = document.createElement("div");
+    soru3.innerHTML = `<h3>3. Mekan Seçenekleri</h3>`;
+    container.appendChild(soru3);
+
+    let secenekler = [];
+
+    if (tur === "İç Mekan") {
+      secenekler = bulusmaVerileri.icMekan;
+    } else if (tur === "Dış Mekan") {
+      // Şehir bazlı dış mekan seçenekleri + ortaklar
+      if (sehir === "İstanbul") {
+        secenekler = [...bulusmaVerileri.disMekanIst, ...bulusmaVerileri.disMekanGenel];
+      } else if (sehir === "Ankara") {
+        secenekler = [...bulusmaVerileri.disMekanAnk, ...bulusmaVerileri.disMekanGenel];
+      } else if (sehir === "Eskişehir") {
+        secenekler = [...bulusmaVerileri.disMekanEsk, ...bulusmaVerileri.disMekanGenel];
+      } else {
+        secenekler = bulusmaVerileri.disMekanGenel;
+      }
+    }
+
+    secenekler.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.className = "button";
+      btn.onclick = () => {
+        secimler.mekan = opt;
+        soru3.style.display = "none";
+        showResult();
+      };
+      soru3.appendChild(btn);
+    });
+
+    function showResult() {
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `<h3>Sonuç:</h3>
+      <p>Şehir: <strong>${secimler.sehir}</strong></p>
+      <p>Tür: <strong>${secimler.tur}</strong></p>
+      <p>Mekan: <strong>${secimler.mekan}</strong></p>`;
+      resultDiv.classList.add("fade-in");
+      container.scrollIntoView({behavior: "smooth"});
+    }
+  }
+}
+
+startBulusmaPlanlama();
+// --- Ne Yesek ---
+
+const yemekVerileri = {
+  anaSecenekler: ["Fast Food", "Sıcak Yemek"],
+  fastFood: ["Pizza", "Makarna", "Hamburger", "Döner", "Çiğköfte"],
+  sicakYemek: ["Green Salads", "Tavuk Dünyası", "Çorbacı", "Masum bir Aspava", "Bizim Lokanta"],
+  pizzaYerler: ["Pizzabuls", "Dominos (Sarımsak Kenar)", "Pasaport", "MİGROS", "Pizza2Go"],
+  hamburgerYerlerIstanbul: ["Burger King", "McDonald’s", "BurgerYiyelim", "Dali", "SaltFried Chicken", "Betro Burger"]
+};
+
+function startYemekSecimi() {
+  const container = document.getElementById("food-steps");
+  container.innerHTML = "";
+
+  let secimler = {};
+
+  // Soru 1: Fast Food / Sıcak Yemek
+  const soru1 = document.createElement("div");
+  soru1.innerHTML = `<h3>1. Ne tür yemek olsun?</h3>`;
+  yemekVerileri.anaSecenekler.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.className = "button";
+    btn.onclick = () => {
+      secimler.tip = opt;
+      soru1.style.display = "none";
+      renderSoru2(opt);
+    };
+    soru1.appendChild(btn);
+  });
+  container.appendChild(soru1);
+
+  // Soru 2: Seçenekler (fastfood veya sıcak yemek)
+  function renderSoru2(tip) {
+    const soru2 = document.createElement("div");
+    soru2.innerHTML = `<h3>2. Seçenekler</h3>`;
+    container.appendChild(soru2);
+
+    let secenekler = [];
+    if (tip === "Fast Food") secenekler = yemekVerileri.fastFood;
+    else secenekler = yemekVerileri.sicakYemek;
+
+    secenekler.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.className = "button";
+      btn.onclick = () => {
+        secimler.yemek = opt;
+        soru2.style.display = "none";
+        showResult(opt);
+      };
+      soru2.appendChild(btn);
+    });
+
+    function showResult(yemek) {
+      const resultDiv = document.createElement("div");
+      resultDiv.className = "fade-in";
+      container.appendChild(resultDiv);
+
+      if (yemek === "Pizza") {
+        resultDiv.innerHTML = `<h3>Pizza Seçenekleri</h3>`;
+        yemekVerileri.pizzaYerler.forEach(pizzaYer => {
+          const btn = document.createElement("button");
+          btn.textContent = pizzaYer;
+          btn.className = "button";
+          resultDiv.appendChild(btn);
+        });
+      }
+      else if (yemek === "Hamburger") {
+        resultDiv.innerHTML = `<h3>Hamburger Seçenekleri</h3>`;
+        yemekVerileri.hamburgerYerlerIstanbul.forEach(hamburgerYer => {
+          const btn = document.createElement("button");
+          btn.textContent = hamburgerYer;
+          btn.className = "button";
+          resultDiv.appendChild(btn);
+        });
+      }
+      else if (yemek === "Çiğköfte") {
+        container.innerHTML = `<h3>Öneri:</h3><p>Çiğköfteci Ömer Usta - Cevizlibağ</p>`;
+      }
+      else if (yemek === "Döner") {
+        container.innerHTML = `<h3>Öneri:</h3><p>Öncü Döner</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/%C3%96nc%C3%BC_doner.jpg" alt="Öncü Döner" style="max-width:100%; border-radius: 12px; margin-top:10px;">`;
+      }
+      else {
+        container.innerHTML = `<h3>Öneri:</h3><p>${yemek} - Harika seçim!</p>`;
+      }
+    }
+  }
+}
+
+startYemekSecimi();
+
