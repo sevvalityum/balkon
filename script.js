@@ -1,358 +1,354 @@
-// script.js
-
-document.addEventListener("DOMContentLoaded", () => {
-  renderAlphabetList();
-  renderCalendar();
-  setupMenuLinks();
-  // Bu Hafta ve Ne Yesek kısımları eklenecek sonra
+// welcome-screen tıklanınca gizle
+document.getElementById('welcome-screen').addEventListener('click', () => {
+  document.getElementById('welcome-screen').style.display = 'none';
 });
-
-// 1. Uzaktan Ne Yapabiliriz A-Z listesi
-const alphabetItems = {
-  A: "Art exchange: Birbirinize çizimler veya dijital sanatlar gönderin.",
-  B: "Book club: Aynı kitabı okuyup tartışın.",
-  C: "Chess Date: Sonucu belli bir satranç maçı yapalım sevgilim.",
-  D: "Deep questions: Anlamlı sorularla birbirinizi daha iyi tanıyın.",
-  E: "Emoji story: Sadece emoji kullanarak hikaye anlatın ve tahmin edin.",
-  F: "Film night: Aynı filmi eş zamanlı izleyin.",
-  G: "GeoGuessr: Online dünya haritasında yer tahmini oyunu oynayın.",
-  H: "Handwritten letters: El yazısı mektuplar gönderin.",
-  I: "Inside jokes: Kendi aranızda özel espriler yapın.",
-  J: "Journaling: Ortak günlük tutup duygularınızı yazın.",
-  K: "Karaoke: Online karaoke yapıp şarkı söyleyin.",
-  L: "Learn together: Yeni bir şey öğrenin (dil, hobi vb.).",
-  M: "Make a mixtape: Birbiriniz için özel çalma listeleri hazırlayın.",
-  N: "Night sky: Yıldızları izleyip fotoğraf paylaşın.",
-  O: "Origami: Birlikte origami yapın ve sonucu gösterin.",
-  P: "Playlist swap: Favori şarkılarınızı değiş tokuş edin.",
-  Q: "Quizzes: Eğlenceli testler yapıp sonuçları karşılaştırın.",
-  R: "Random acts of kindness: Küçük sürprizler yapın, hediyeler gönderin.",
-  S: "Stargazing: Sanal olarak birlikte yıldızları inceleyin.",
-  T: "Tarot card reading: Birbirinize tarot falı bakın.",
-  U: "Online Uno date: İnternetten Uno veya başka kart oyunları oynayın.",
-  V: "Virtual tours: Sanal müzeler veya şehir turları yapın.",
-  W: "Workout: Beraber online egzersiz yapın.",
-  X: "XOXO letters: Sevgili dolu mesajlar, resimler paylaşın.",
-  Y: "YouTube binge: Aynı anda YouTube videoları izleyin.",
-  Z: "Zen time: Birlikte meditasyon veya rahatlama yapın."
-};
-
-function renderAlphabetList() {
-  const list = document.querySelector(".alphabet-list");
-  list.innerHTML = Object.entries(alphabetItems)
-    .map(([letter, desc]) => `<li><strong>${letter}:</strong> ${desc}</li>`)
-    .join("");
-}
-
-// 4. Takvim
-
-let currentMonth = 7; // Ağustos 2025 (0 bazlı: 0=Ocak)
-let currentYear = 2025;
-
-const monthNames = [
-  "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-  "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+const remoteList = [
+  {letter: "A", text:"Art exchange: Birbirinize çizimler veya dijital sanatlar gönderin."},
+  {letter: "B", text:"Book club: Aynı kitabı okuyup tartışın."},
+  {letter: "C", text:"Chess Date: Sonucu belli bir satranç maçı yapalım sevgilim."},
+  {letter: "D", text:"Deep questions: Anlamlı sorularla birbirinizi daha iyi tanıyın."},
+  {letter: "E", text:"Emoji story: Sadece emoji kullanarak hikaye anlatın ve tahmin edin."},
+  {letter: "F", text:"Film night: Aynı filmi eş zamanlı izleyin."},
+  {letter: "G", text:"GeoGuessr: Online dünya haritasında yer tahmini oyunu oynayın."},
+  {letter: "H", text:"Handwritten letters: El yazısı mektuplar gönderin."},
+  {letter: "I", text:"Inside jokes: Kendi aranızda özel espriler yapın."},
+  {letter: "J", text:"Journaling: Ortak günlük tutup duygularınızı yazın."},
+  {letter: "K", text:"Karaoke: Online karaoke yapıp şarkı söyleyin."},
+  {letter: "L", text:"Learn together: Yeni bir şey öğrenin (dil, hobi vb.)."},
+  {letter: "M", text:"Make a mixtape: Birbiriniz için özel çalma listeleri hazırlayın."},
+  {letter: "N", text:"Night sky: Yıldızları izleyip fotoğraf paylaşın."},
+  {letter: "O", text:"Origami: Birlikte origami yapın ve sonucu gösterin."},
+  {letter: "P", text:"Playlist swap: Favori şarkılarınızı değiş tokuş edin."},
+  {letter: "Q", text:"Quizzes: Eğlenceli testler yapıp sonuçları karşılaştırın."},
+  {letter: "R", text:"Random acts of kindness: Küçük sürprizler yapın, hediyeler gönderin."},
+  {letter: "S", text:"Stargazing: Sanal olarak birlikte yıldızları inceleyin."},
+  {letter: "T", text:"Tarot card reading: Birbirinize tarot falı bakın."},
+  {letter: "U", text:"Online Uno date: İnternetten Uno veya başka kart oyunları oynayın."},
+  {letter: "V", text:"Virtual tours: Sanal müzeler veya şehir turları yapın."},
+  {letter: "W", text:"Workout: Beraber online egzersiz yapın."},
+  {letter: "X", text:"XOXO letters: Sevgili dolu mesajlar, resimler paylaşın."},
+  {letter: "Y", text:"YouTube binge: Aynı anda YouTube videoları izleyin."},
+  {letter: "Z", text:"Zen time: Birlikte meditasyon veya rahatlama yapın."},
 ];
 
-function renderCalendar() {
-  const calendarContainer = document.getElementById("calendar-container");
-  calendarContainer.innerHTML = "";
+function toggleRemoteList() {
+  const listEl = document.querySelector('.alphabet-list');
+  if(listEl.style.display === 'none') {
+    listEl.style.display = 'block';
+    if(listEl.children.length === 0) {
+      remoteList.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.letter} – ${item.text}`;
+        listEl.appendChild(li);
+      });
+    }
+  } else {
+    listEl.style.display = 'none';
+  }
+}
+const bulusmaData = {
+  locations: ["Ankara", "İstanbul", "Eskişehir", "Kim Bilir?"],
+  indoor: ["AVM", "Sinema", "Tiyatro", "Sergi", "Müze", "Kutu Oyunları", "Hobi Atölyeleri", "Cafe", "Sürekli Dizi Maratonu"],
+  outdoorIstanbul: ["Vapur", "Pierre Loti", "Maçka Parkı", "Eyüpsultan", "Balat", "Kadıköy turu", "Yıldız Teknik Beşiktaş Kampüsü", "Beylerbeyi Sarayı", "Yıldız Sarayı", "Galata Kulesi", "Yerebatan Sarnıcı"],
+  outdoorAnkara: ["Ayaş", "Anıtkabir", "7. Cadde", "Kuğulu Park", "Gençlik Parkı", "Bahçelievler", "Mogan", "ESAT Mahallesi"],
+  outdoorEskisehir: ["Barlar Sokağı", "Karnaval", "VR", "Pamukşekerli Türk Kahvecisi"],
+  commonOutdoor: ["Piknik", "Voleybol", "Badminton", "Yürüyüş Rotası", "Kamp", "Konser", "Fotoğraf Çekme Buluşması"]
+};
 
-  // Header ve Ay Değiştirme Butonları
-  const header = document.createElement("div");
-  header.className = "calendar-header";
+const interactiveSteps = document.getElementById('interactive-steps');
+const resultEl = document.getElementById('result');
 
-  const prevBtn = document.createElement("button");
-  prevBtn.textContent = "◀";
+let selections = {};
+
+// Adım 1: Nerede Buluşalım?
+function startBulusma() {
+  interactiveSteps.innerHTML = '';
+  resultEl.innerHTML = '';
+  selections = {};
+  createQuestion('Nerede Buluşalım?', bulusmaData.locations, (answer) => {
+    selections.location = answer;
+    step2MeetingType();
+  });
+}
+
+// Adım 2: Nasıl bir buluşma olsun?
+function step2MeetingType() {
+  createQuestion('Nasıl bir buluşma olsun?', ['Dış Mekan', 'İç Mekan'], (answer) => {
+    selections.meetingType = answer;
+    if(answer === 'İç Mekan') {
+      step3IndoorOptions();
+    } else {
+      step3OutdoorOptions();
+    }
+  });
+}
+
+// Adım 3 İç Mekan Seçenekleri
+function step3IndoorOptions() {
+  createQuestion('İç Mekan seçenekleri:', bulusmaData.indoor, (answer) => {
+    selections.indoorOption = answer;
+    showBulusmaResult();
+  });
+}
+
+// Adım 3 Dış Mekan Seçenekleri
+function step3OutdoorOptions() {
+  let options = [...bulusmaData.commonOutdoor];
+  if(selections.location === 'İstanbul') {
+    options = options.concat(bulusmaData.outdoorIstanbul);
+  } else if(selections.location === 'Ankara') {
+    options = options.concat(bulusmaData.outdoorAnkara);
+  } else if(selections.location === 'Eskişehir') {
+    options = options.concat(bulusmaData.outdoorEskisehir);
+  }
+  createQuestion('Dış Mekan seçenekleri:', options, (answer) => {
+    selections.outdoorOption = answer;
+    showBulusmaResult();
+  });
+}
+
+// Genel soru yaratma fonksiyonu
+function createQuestion(questionText, options, callback) {
+  interactiveSteps.innerHTML = '';
+  const q = document.createElement('h3');
+  q.textContent = questionText;
+  interactiveSteps.appendChild(q);
+
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.className = 'button';
+    btn.onclick = () => {
+      callback(opt);
+    };
+    interactiveSteps.appendChild(btn);
+  });
+}
+
+// Sonuç göster
+function showBulusmaResult() {
+  let text = `Seçimleriniz: <br>`;
+  text += `Lokasyon: <strong>${selections.location || '-'}</strong><br>`;
+  text += `Buluşma Türü: <strong>${selections.meetingType || '-'}</strong><br>`;
+  if(selections.meetingType === 'İç Mekan') {
+    text += `İç Mekan Seçeneği: <strong>${selections.indoorOption || '-'}</strong>`;
+  } else {
+    text += `Dış Mekan Seçeneği: <strong>${selections.outdoorOption || '-'}</strong>`;
+  }
+  resultEl.innerHTML = text;
+}
+
+// Reset butonu
+document.getElementById('reset-bulusma').addEventListener('click', startBulusma);
+
+// Sayfa açıldığında başlat
+startBulusma();
+const foodSteps = document.getElementById('food-steps');
+const resetFoodBtn = document.getElementById('reset-yemek');
+
+let foodSelection = {};
+
+const foodData = {
+  mainCategories: ["Fast Food", "Sıcak Yemek"],
+  fastFoodOptions: ["Pizza", "Makarna", "Hamburger", "Döner", "Çiğköfte"],
+  hotFoodOptions: ["Green Salads", "Tavuk Dünyası", "Çorbacı", "Masum bir Aspava", "Bizim Lokanta"],
+  pizzaPlaces: ["Pizzabuls", "Dominos (Sarımsak Kenar)", "Pasaport", "MİGROS", "Pizza2Go"],
+  hamburgerPlaces: ["Burger King", "McDonald’s", "BurgerYiyelim", "Dali", "SaltFried Chicken", "Betro Burger"],
+  hamburgerSpecialCities: ["İstanbul"],
+  cigkoftePlace: "Çiğköfteci Ömer Usta - Cevizlibağ",
+  donerPlace: "Öncü"
+};
+
+function startFoodSelection() {
+  foodSteps.innerHTML = '';
+  foodSelection = {};
+  createFoodQuestion('Ne yesek?', foodData.mainCategories, (answer) => {
+    foodSelection.main = answer;
+    if(answer === "Fast Food") {
+      createFoodQuestion('Fast Food seçenekleri:', foodData.fastFoodOptions, (ans) => {
+        foodSelection.fastFood = ans;
+        if(ans === 'Pizza') {
+          createFoodQuestion('Pizza için:', foodData.pizzaPlaces, (place) => {
+            foodSelection.place = place;
+            showFoodResult();
+          });
+        } else if(ans === 'Hamburger') {
+          createFoodQuestion('Hamburger için:', foodData.hamburgerPlaces, (place) => {
+            foodSelection.place = place;
+            showFoodResult();
+          });
+        } else if(ans === 'Çiğköfte') {
+          foodSelection.place = foodData.cigkoftePlace;
+          showFoodResult();
+        } else if(ans === 'Döner') {
+          foodSelection.place = foodData.donerPlace;
+          showFoodResult();
+        } else {
+          showFoodResult();
+        }
+      });
+    } else {
+      // Sıcak Yemek
+      createFoodQuestion('Ev Yemeği seçenekleri:', foodData.hotFoodOptions, (ans) => {
+        foodSelection.hotFood = ans;
+        showFoodResult();
+      });
+    }
+  });
+}
+
+function createFoodQuestion(questionText, options, callback) {
+  foodSteps.innerHTML = '';
+  const q = document.createElement('h3');
+  q.textContent = questionText;
+  foodSteps.appendChild(q);
+
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.className = 'button';
+    btn.onclick = () => {
+      callback(opt);
+    };
+    foodSteps.appendChild(btn);
+  });
+}
+
+function showFoodResult() {
+  let text = `Seçimleriniz:<br>`;
+  text += `Ana Kategori: <strong>${foodSelection.main || '-'}</strong><br>`;
+  if(foodSelection.main === "Fast Food") {
+    text += `Seçenek: <strong>${foodSelection.fastFood || '-'}</strong><br>`;
+    if(foodSelection.place) {
+      text += `Yer: <strong>${foodSelection.place}</strong>`;
+      // Öncü resmi gösterme örneği
+      if(foodSelection.place === "Öncü") {
+        text += `<br><img src="oncu.jpg" alt="Öncü Döner" style="max-width: 300px; margin-top: 1rem; border-radius: 8px;">`;
+      }
+    }
+  } else {
+    text += `Seçenek: <strong>${foodSelection.hotFood || '-'}</strong>`;
+  }
+  foodSteps.innerHTML += `<div class="fade-in" style="margin-top: 1rem;">${text}</div>`;
+}
+
+resetFoodBtn.addEventListener('click', startFoodSelection);
+
+// Sayfa açıldığında başlat
+startFoodSelection();
+const calendarContainer = document.getElementById('calendar-container');
+
+let currentYear = 2025;
+let currentMonth = 7; // Ağustos 2025, 0 tabanlı, 7 = Ağustos (Ocak=0)
+
+function createCalendar(year, month) {
+  calendarContainer.innerHTML = ''; // Temizle
+
+  // Ay ve Yıl Başlığı
+  const monthNames = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  const header = document.createElement('div');
+  header.style.display = 'flex';
+  header.style.justifyContent = 'space-between';
+  header.style.alignItems = 'center';
+  header.style.marginBottom = '1rem';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.textContent = '<';
+  prevBtn.className = 'button';
   prevBtn.onclick = () => {
-    if (currentYear < 2025 || (currentYear === 2025 && currentMonth <= 7)) return; // Sınır Ağustos 2025
-    if (currentMonth === 0) {
-      currentMonth = 11;
+    if(month === 8 && year === 2026) return; // Sınır sağda  Ekim 2026
+    if(month === 0) {
       currentYear--;
+      currentMonth = 11;
     } else {
       currentMonth--;
     }
-    renderCalendar();
+    createCalendar(currentYear, currentMonth);
   };
 
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "▶";
+  const nextBtn = document.createElement('button');
+  nextBtn.textContent = '>';
+  nextBtn.className = 'button';
   nextBtn.onclick = () => {
-    if (currentYear > 2026 || (currentYear === 2026 && currentMonth >= 9)) return; // Sınır Ekim 2026
-    if (currentMonth === 11) {
-      currentMonth = 0;
+    if(month === 7 && year === 2025) {
+      // Ağustos 2025 başlangıç, izin
+    }
+    if(month === 9 && year === 2026) return; // Sınır sağda Ekim 2026
+    if(month === 11) {
       currentYear++;
+      currentMonth = 0;
     } else {
       currentMonth++;
     }
-    renderCalendar();
+    createCalendar(currentYear, currentMonth);
   };
 
-  const title = document.createElement("h3");
-  title.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+  const title = document.createElement('h3');
+  title.textContent = `${monthNames[month]} ${year}`;
+  title.style.flexGrow = '1';
+  title.style.textAlign = 'center';
 
   header.appendChild(prevBtn);
   header.appendChild(title);
   header.appendChild(nextBtn);
   calendarContainer.appendChild(header);
 
-  // Haftanın günleri
-  const daysRow = document.createElement("div");
-  daysRow.className = "calendar-days";
-  ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"].forEach(day => {
-    const dayEl = document.createElement("div");
-    dayEl.className = "day-name";
-    dayEl.textContent = day;
-    daysRow.appendChild(dayEl);
+  // Haftanın günleri başlıkları
+  const daysOfWeek = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+  const daysRow = document.createElement('div');
+  daysRow.style.display = 'grid';
+  daysRow.style.gridTemplateColumns = 'repeat(7, 1fr)';
+  daysRow.style.fontWeight = '700';
+  daysRow.style.marginBottom = '0.5rem';
+  daysOfWeek.forEach(day => {
+    const d = document.createElement('div');
+    d.textContent = day;
+    d.style.textAlign = 'center';
+    daysRow.appendChild(d);
   });
   calendarContainer.appendChild(daysRow);
 
-  // Günler ve boş hücreler
-  const calendarGrid = document.createElement("div");
-  calendarGrid.className = "calendar-grid";
+  // Günler ızgarası
+  const daysGrid = document.createElement('div');
+  daysGrid.style.display = 'grid';
+  daysGrid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+  daysGrid.style.gap = '4px';
 
-  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  // İlk gün haftanın günü (0=Pzt, 6=Paz)
+  const firstDay = new Date(year, month, 1).getDay();
+  // JS: Pazar=0 ... Cumartesi=6, bizde Pzt=0, pazar=6 olduğu için:
+  const firstWeekDay = (firstDay + 6) % 7;
 
-  // JS'te haftanın günü Pazar=0... biz Pazartesi=0 olacak şekilde ayarlıyoruz:
-  let skip = (firstDay + 6) % 7;
-  for (let i = 0; i < skip; i++) {
-    const empty = document.createElement("div");
-    empty.className = "calendar-cell empty";
-    calendarGrid.appendChild(empty);
+  // Boş kutucuklar ekle
+  for(let i=0; i < firstWeekDay; i++) {
+    const empty = document.createElement('div');
+    daysGrid.appendChild(empty);
   }
 
+  // Günleri ekle
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
   const today = new Date();
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const cell = document.createElement("div");
-    cell.className = "calendar-cell";
-    cell.textContent = day;
+  for(let day=1; day<=daysInMonth; day++) {
+    const dayDiv = document.createElement('div');
+    dayDiv.textContent = day;
+    dayDiv.style.textAlign = 'center';
+    dayDiv.style.padding = '8px';
+    dayDiv.style.borderRadius = '8px';
+    dayDiv.style.userSelect = 'none';
 
-    // Bugünü işaretle
-    if (
-      day === today.getDate() &&
-      currentMonth === today.getMonth() &&
-      currentYear === today.getFullYear()
-    ) {
-      cell.classList.add("today");
+    // Bugün mü?
+    if(day === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+      dayDiv.style.border = '3px solid #00ffff'; // cam göbeği cursor
+      dayDiv.style.fontWeight = '700';
     }
 
-    calendarGrid.appendChild(cell);
+    // TODO: Özel tarihler renkleri ve doğum günü işaretleri buraya gelecek.
+
+    daysGrid.appendChild(dayDiv);
   }
 
-  calendarContainer.appendChild(calendarGrid);
+  calendarContainer.appendChild(daysGrid);
 }
 
-// Menüde tıklanınca o bölüme yumuşak scroll
-function setupMenuLinks() {
-  document.querySelectorAll(".navbar a").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const targetId = link.getAttribute("href").substring(1);
-      const targetElem = document.getElementById(targetId);
-      if (targetElem) {
-        targetElem.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
-}
-// --- Bu Hafta Ne Yapıyoruz ---
-
-const bulusmaVerileri = {
-  sehirler: ["Ankara", "İstanbul", "Eskişehir", "Kim Bilir?"],
-  icMekan: ["AVM", "Sinema", "Tiyatro", "Sergi", "Müze", "Kutu Oyunları", "Hobi Atölyeleri", "Cafe", "Sürekli Dizi Maratonu"],
-  disMekanGenel: ["Piknik", "Voleybol", "Badminton", "Yürüyüş Rotası", "Kamp", "Konser", "Fotoğraf Çekme Buluşması"],
-  disMekanIst: ["Vapur", "Pierre Loti", "Maçka Parkı", "Eyüpsultan", "Balat", "Kadıköy turu", "Yıldız Teknik Beşiktaş Kampüsü", "Beylerbeyi Sarayı", "Yıldız Sarayı", "Galata Kulesi", "Yerebatan Sarnıcı"],
-  disMekanAnk: ["Ayaş", "Anıtkabir", "7. Cadde", "Kuğulu Park", "Gençlik Parkı", "Bahçelievler", "Mogan", "ESAT Mahallesi"],
-  disMekanEsk: ["Barlar Sokağı", "Karnaval", "VR", "Pamukşekerli Türk Kahvecisi"]
-};
-
-function startBulusmaPlanlama() {
-  const container = document.getElementById("interactive-steps");
-  container.innerHTML = "";
-  const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "";
-
-  let secimler = {};
-
-  // Soru 1: Nerede buluşalım?
-  const soru1 = document.createElement("div");
-  soru1.innerHTML = `<h3>1. Nerede Buluşalım?</h3>`;
-  bulusmaVerileri.sehirler.forEach(sehir => {
-    const btn = document.createElement("button");
-    btn.textContent = sehir;
-    btn.className = "button";
-    btn.onclick = () => {
-      secimler.sehir = sehir;
-      soru1.style.display = "none";
-      soru2.style.display = "block";
-      renderSoru2(sehir);
-    };
-    soru1.appendChild(btn);
-  });
-  container.appendChild(soru1);
-
-  // Soru 2: Nasıl bir buluşma olsun? (Dış / İç mekan)
-  const soru2 = document.createElement("div");
-  soru2.style.display = "none";
-  soru2.innerHTML = `<h3>2. Nasıl bir buluşma olsun?</h3>`;
-
-  ["Dış Mekan", "İç Mekan"].forEach(tur => {
-    const btn = document.createElement("button");
-    btn.textContent = tur;
-    btn.className = "button";
-    btn.onclick = () => {
-      secimler.tur = tur;
-      soru2.style.display = "none";
-      renderSoru3(secimler.sehir, tur);
-    };
-    soru2.appendChild(btn);
-  });
-  container.appendChild(soru2);
-
-  // Soru 3: Mekan seçenekleri (dinamik, şehir ve tur bazlı)
-  function renderSoru2(sehir) {
-    soru2.style.display = "block";
-  }
-
-  function renderSoru3(sehir, tur) {
-    const soru3 = document.createElement("div");
-    soru3.innerHTML = `<h3>3. Mekan Seçenekleri</h3>`;
-    container.appendChild(soru3);
-
-    let secenekler = [];
-
-    if (tur === "İç Mekan") {
-      secenekler = bulusmaVerileri.icMekan;
-    } else if (tur === "Dış Mekan") {
-      // Şehir bazlı dış mekan seçenekleri + ortaklar
-      if (sehir === "İstanbul") {
-        secenekler = [...bulusmaVerileri.disMekanIst, ...bulusmaVerileri.disMekanGenel];
-      } else if (sehir === "Ankara") {
-        secenekler = [...bulusmaVerileri.disMekanAnk, ...bulusmaVerileri.disMekanGenel];
-      } else if (sehir === "Eskişehir") {
-        secenekler = [...bulusmaVerileri.disMekanEsk, ...bulusmaVerileri.disMekanGenel];
-      } else {
-        secenekler = bulusmaVerileri.disMekanGenel;
-      }
-    }
-
-    secenekler.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.className = "button";
-      btn.onclick = () => {
-        secimler.mekan = opt;
-        soru3.style.display = "none";
-        showResult();
-      };
-      soru3.appendChild(btn);
-    });
-
-    function showResult() {
-      const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = `<h3>Sonuç:</h3>
-      <p>Şehir: <strong>${secimler.sehir}</strong></p>
-      <p>Tür: <strong>${secimler.tur}</strong></p>
-      <p>Mekan: <strong>${secimler.mekan}</strong></p>`;
-      resultDiv.classList.add("fade-in");
-      container.scrollIntoView({behavior: "smooth"});
-    }
-  }
-}
-
-startBulusmaPlanlama();
-// --- Ne Yesek ---
-
-const yemekVerileri = {
-  anaSecenekler: ["Fast Food", "Sıcak Yemek"],
-  fastFood: ["Pizza", "Makarna", "Hamburger", "Döner", "Çiğköfte"],
-  sicakYemek: ["Green Salads", "Tavuk Dünyası", "Çorbacı", "Masum bir Aspava", "Bizim Lokanta"],
-  pizzaYerler: ["Pizzabuls", "Dominos (Sarımsak Kenar)", "Pasaport", "MİGROS", "Pizza2Go"],
-  hamburgerYerlerIstanbul: ["Burger King", "McDonald’s", "BurgerYiyelim", "Dali", "SaltFried Chicken", "Betro Burger"]
-};
-
-function startYemekSecimi() {
-  const container = document.getElementById("food-steps");
-  container.innerHTML = "";
-
-  let secimler = {};
-
-  // Soru 1: Fast Food / Sıcak Yemek
-  const soru1 = document.createElement("div");
-  soru1.innerHTML = `<h3>1. Ne tür yemek olsun?</h3>`;
-  yemekVerileri.anaSecenekler.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = opt;
-    btn.className = "button";
-    btn.onclick = () => {
-      secimler.tip = opt;
-      soru1.style.display = "none";
-      renderSoru2(opt);
-    };
-    soru1.appendChild(btn);
-  });
-  container.appendChild(soru1);
-
-  // Soru 2: Seçenekler (fastfood veya sıcak yemek)
-  function renderSoru2(tip) {
-    const soru2 = document.createElement("div");
-    soru2.innerHTML = `<h3>2. Seçenekler</h3>`;
-    container.appendChild(soru2);
-
-    let secenekler = [];
-    if (tip === "Fast Food") secenekler = yemekVerileri.fastFood;
-    else secenekler = yemekVerileri.sicakYemek;
-
-    secenekler.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.className = "button";
-      btn.onclick = () => {
-        secimler.yemek = opt;
-        soru2.style.display = "none";
-        showResult(opt);
-      };
-      soru2.appendChild(btn);
-    });
-
-    function showResult(yemek) {
-      const resultDiv = document.createElement("div");
-      resultDiv.className = "fade-in";
-      container.appendChild(resultDiv);
-
-      if (yemek === "Pizza") {
-        resultDiv.innerHTML = `<h3>Pizza Seçenekleri</h3>`;
-        yemekVerileri.pizzaYerler.forEach(pizzaYer => {
-          const btn = document.createElement("button");
-          btn.textContent = pizzaYer;
-          btn.className = "button";
-          resultDiv.appendChild(btn);
-        });
-      }
-      else if (yemek === "Hamburger") {
-        resultDiv.innerHTML = `<h3>Hamburger Seçenekleri</h3>`;
-        yemekVerileri.hamburgerYerlerIstanbul.forEach(hamburgerYer => {
-          const btn = document.createElement("button");
-          btn.textContent = hamburgerYer;
-          btn.className = "button";
-          resultDiv.appendChild(btn);
-        });
-      }
-      else if (yemek === "Çiğköfte") {
-        container.innerHTML = `<h3>Öneri:</h3><p>Çiğköfteci Ömer Usta - Cevizlibağ</p>`;
-      }
-      else if (yemek === "Döner") {
-        container.innerHTML = `<h3>Öneri:</h3><p>Öncü Döner</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/%C3%96nc%C3%BC_doner.jpg" alt="Öncü Döner" style="max-width:100%; border-radius: 12px; margin-top:10px;">`;
-      }
-      else {
-        container.innerHTML = `<h3>Öneri:</h3><p>${yemek} - Harika seçim!</p>`;
-      }
-    }
-  }
-}
-
-startYemekSecimi();
-
+createCalendar(currentYear, currentMonth);
