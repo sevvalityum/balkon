@@ -2,72 +2,59 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Balkon | Think Book</title>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Balkon - Şevval & Utku Think Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Cam göbeği zemin + bulutlar -->
-  <div class="background-pixelart"></div>
+  <!-- Günaydın Hoşgeldiniz Ekranı -->
+  <div id="welcome-screen">
+    Günaydın!
+  </div>
 
-  <!-- Menü -->
-  <header>
-    <nav class="navbar">
-      <ul>
-        <li><a href="#remote">1 Uzaktan Ne Yapabiliriz</a></li>
-        <li><a href="#this-week">2 Bu Hafta Ne Yapıyoruz</a></li>
-        <li><a href="#food">3 Ne Yesek</a></li>
-        <li><a href="#calendar">4 Takvim</a></li>
-      </ul>
-    </nav>
-  </header>
-  <section id="this-week" class="section">
-  <h2>Bu Hafta Ne Yapıyoruz?</h2>
-  <button id="reset-bulusma" class="button" style="margin-bottom: 1rem;">Seçimleri Sıfırla</button>
-  <div id="interactive-steps"></div>
-  <div id="result" class="fade-in"></div>
-</section>
-
+  <!-- Menü Çubuğu -->
+  <nav class="navbar">
+    <a href="#remote">Uzaktan Ne Yapabiliriz</a>
+    <a href="#this-week">Bu Hafta Ne Yapıyoruz</a>
+    <a href="#food">Ne Yesek</a>
+    <a href="#calendar">Takvim</a>
+  </nav>
 
   <main>
-    <!-- 1. Uzaktan Ne Yapabiliriz -->
+    <!-- 1 Uzaktan Ne Yapabiliriz -->
     <section id="remote" class="section">
-      <h2>Uzaktan Ne Yapabiliriz?</h2>
-      <ul class="alphabet-list">
-        <!-- A-Z Uzaktan liste JS ile gelecek -->
-      </ul>
-      <div class="extra-links">
-        <a href="https://theuselessweb.com/" target="_blank" class="button">Sıkılınca Tıkla</a>
-        <a href="https://sherryuser.github.io/cake-blow/" target="_blank" class="button">Üflemekten Çekinme 🎂</a>
+      <h2>Uzaktan Ne Yapabiliriz</h2>
+      <button class="button" onclick="toggleRemoteList()">Listeyi Göster / Gizle</button>
+      <ul class="alphabet-list" style="display:none; margin-top:1rem;"></ul>
+      <div style="margin-top: 1rem;">
+        <button class="button" onclick="window.open('https://theuselessweb.com/', '_blank')">Sıkılınca Tıkla</button>
+        <button class="button" onclick="window.open('https://sherryuser.github.io/cake-blow/', '_blank')">Üflemekten Çekinme</button>
       </div>
     </section>
 
-    <!-- 2. Bu Hafta Ne Yapıyoruz -->
+    <!-- 2 Bu Hafta Ne Yapıyoruz -->
     <section id="this-week" class="section">
       <h2>Bu Hafta Ne Yapıyoruz?</h2>
-      <div id="interactive-steps">
-        <!-- Adım adım buluşma planlama JS ile gelecek -->
-      </div>
+      <button id="reset-bulusma" class="button" style="margin-bottom: 1rem;">Seçimleri Sıfırla</button>
+      <div id="interactive-steps"></div>
       <div id="result" class="fade-in"></div>
     </section>
 
-    <!-- 3. Ne Yesek -->
+    <!-- 3 Ne Yesek -->
     <section id="food" class="section">
       <h2>Ne Yesek?</h2>
-      <div id="food-steps">
-        <!-- Yemek önerileri JS ile gelecek -->
-      </div>
+      <button id="reset-yemek" class="button" style="margin-bottom: 1rem;">Seçimleri Sıfırla</button>
+      <div id="food-steps"></div>
     </section>
 
-    <!-- 4. Takvim -->
+    <!-- 4 Takvim -->
     <section id="calendar" class="section">
       <h2>Takvim</h2>
-      <div id="calendar-container">
-        <!-- JS ile interaktif takvim buraya yüklenecek -->
-      </div>
+      <div id="calendar-container"></div>
     </section>
   </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
