@@ -1,0 +1,178 @@
+/* style.css */
+
+body {
+  margin: 0;
+  font-family: 'VT323', monospace;
+  background-color: #aeeeee; /* Cam göbeği */
+  color: #333;
+}
+
+.background-pixelart {
+  background-image: url('bulutlar.png'); /* pixel art beyaz bulutlar */
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.navbar {
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #444;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ff69b4;
+}
+
+.section {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 2rem auto;
+  max-width: 900px;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #fff;
+}
+
+ul.alphabet-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+ul.alphabet-list li {
+  margin: 0.5rem 0;
+  background-color: #ffffffd9;
+  padding: 0.6rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.button {
+  display: inline-block;
+  padding: 0.8rem 1.2rem;
+  margin: 0.5rem;
+  background: #fff;
+  border: 2px solid #444;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  color: #444;
+  font-weight: bold;
+  font-family: 'VT323', monospace;
+}
+
+.button:hover {
+  background: #ffdddd;
+}
+
+.fade-in {
+  animation: fadeIn 1.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .button {
+    width: 90%;
+    text-align: center;
+  }
+}
+
+/* TAKVİM TASARIMI */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-header h3 {
+  margin: 0;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.day-name {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-cell {
+  background-color: white;
+  border-radius: 6px;
+  padding: 0.7rem 0;
+  text-align: center;
+  box-shadow: 0 0 4px rgba(0,0,0,0.05);
+  font-weight: bold;
+  cursor: default;
+}
+
+.calendar-cell.today {
+  outline: 3px dashed #008080;
+  background-color: #ddfafa;
+}
+
+.calendar-cell.empty {
+  background: transparent;
+  box-shadow: none;
+}
