@@ -1,178 +1,150 @@
-/* style.css */
-
+/* ---------- Genel Gövde ---------- */
 body {
   margin: 0;
-  font-family: 'VT323', monospace;
-  background-color: #aeeeee; /* Cam göbeği */
-  color: #333;
+  font-family: 'VT323', monospace;  /* Keskin indie lo-fi font */
+  background: linear-gradient(135deg, #a3c1d1 0%, #7b8d99 100%); /* Bebek mavisi degrade */
+  color: #eee;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.background-pixelart {
-  background-image: url('bulutlar.png'); /* pixel art beyaz bulutlar */
+/* ---------- Bulutlu Arka Plan ---------- */
+body::before {
+  content: "";
   position: fixed;
-  z-index: -1;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  background-size: cover;
-  background-repeat: no-repeat;
+  height: 100vh;
+  background: url('clouds.png') repeat-x;
+  background-size: contain;
+  opacity: 0.3;   /* Şeffaflık ile bulutlar arka planda */
+  pointer-events: none;  /* Bulutlar tıklanmaz */
+  animation: cloudMove 120s linear infinite;
+  z-index: 0; /* En arka plan */
 }
 
+@keyframes cloudMove {
+  from { background-position: 0 0; }
+  to { background-position: 10000px 0; } /* Bulutlar yatay kayacak */
+}
+
+/* ---------- Başlıklar ---------- */
+h1, h2, h3 {
+  font-size: 3.5rem; /* Büyük, net */
+  margin-bottom: 1.5rem;
+  color: #f0f4f8; /* Beyaz tonları */
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.6); /* Hafif gölge */
+  user-select: none; /* Seçilemez */
+}
+
+/* ---------- Menü Çubuğu ---------- */
 .navbar {
-  background: rgba(255, 255, 255, 0.9);
+  background-color: rgba(50, 80, 100, 0.75); /* Yarı saydam koyu */
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  gap: 2rem;
+  padding: 1rem 0;
   position: sticky;
   top: 0;
-  z-index: 10;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 0;
-  margin: 0;
+  z-index: 10; /* Üstte kalsın */
 }
 
 .navbar a {
+  color: #e0e6eb;
   text-decoration: none;
-  color: #444;
-  font-size: 1.2rem;
+  font-weight: 600;
+  font-size: 1.4rem;
   transition: color 0.3s ease;
 }
 
-.navbar a:hover {
-  color: #ff69b4;
+.navbar a:hover,
+.navbar a:focus {
+  color: #b4d1e7;
+  outline: none;
 }
 
-.section {
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.7);
-  margin: 2rem auto;
-  max-width: 900px;
-  border-radius: 16px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
-}
-
-h2, h3 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #333;
-  text-align: center;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 #fff;
-}
-
-ul.alphabet-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 1rem 0;
-}
-
-ul.alphabet-list li {
-  margin: 0.5rem 0;
-  background-color: #ffffffd9;
-  padding: 0.6rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
+/* ---------- Butonlar ---------- */
 .button {
-  display: inline-block;
-  padding: 0.8rem 1.2rem;
-  margin: 0.5rem;
-  background: #fff;
-  border: 2px solid #444;
-  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  text-decoration: none;
-  color: #444;
-  font-weight: bold;
-  font-family: 'VT323', monospace;
+  background-color: #8dbdd8; /* Cam göbeği tonları */
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  color: #f0f4f8;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0.3rem 0.5rem;
+  transition: background-color 0.25s ease;
+  user-select: none;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
 }
 
-.button:hover {
-  background: #ffdddd;
+.button:hover,
+.button:focus {
+  background-color: #aac9e6;
+  outline: none;
+  box-shadow: 0 0 8px #a3c1d1;
 }
 
+/* ---------- Bölümler ---------- */
+.section {
+  padding: 2rem 1rem 3rem 1rem;
+  max-width: 960px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Fade Animasyon ---------- */
 .fade-in {
-  animation: fadeIn 1.5s ease-in;
+  animation: fadeIn 0.8s ease forwards;
+  opacity: 0;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
   to { opacity: 1; }
 }
 
-@media (max-width: 768px) {
-  .navbar ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .section {
-    margin: 1rem;
-    padding: 1rem;
-  }
-
-  .button {
-    width: 90%;
-    text-align: center;
-  }
-}
-
-/* TAKVİM TASARIMI */
-.calendar-header {
+/* ---------- Günaydın Hoşgeldin Ekranı ---------- */
+#welcome-screen {
+  position: fixed;
+  top:0; left:0; width: 100%; height: 100vh;
+  background-color: #89bcd9;
+  color: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
+  font-family: 'VT323', monospace;
+  font-size: 8rem;
+  z-index: 9999;
+  user-select: none;
+  cursor: pointer;
+  text-shadow: 3px 3px 5px rgba(0,0,0,0.7);
 }
 
-.calendar-header h3 {
-  margin: 0;
-}
-
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.day-name {
-  text-align: center;
-  padding: 0.5rem 0;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-.calendar-cell {
-  background-color: white;
-  border-radius: 6px;
-  padding: 0.7rem 0;
-  text-align: center;
-  box-shadow: 0 0 4px rgba(0,0,0,0.05);
-  font-weight: bold;
-  cursor: default;
-}
-
-.calendar-cell.today {
-  outline: 3px dashed #008080;
-  background-color: #ddfafa;
-}
-
-.calendar-cell.empty {
-  background: transparent;
-  box-shadow: none;
+/* ---------- Responsive (Mobil Uyumlu) ---------- */
+@media (max-width: 768px) {
+  h1, h2, h3 {
+    font-size: 2.5rem;
+  }
+  .navbar {
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+  .navbar a {
+    font-size: 1.1rem;
+  }
+  .button {
+    font-size: 1rem;
+    padding: 8px 14px;
+  }
+  #welcome-screen {
+    font-size: 5rem;
+  }
+  .section {
+    padding: 1.5rem 1rem 2rem 1rem;
+  }
 }
