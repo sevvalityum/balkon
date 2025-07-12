@@ -429,3 +429,138 @@ createCalendar(currentYear, currentMonth);
   box-shadow: 0 0 0 3px #00ffff60;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+
+  const calendarDays = document.getElementById('calendar-days');
+  const calendarTitle = document.getElementById('calendar-title');
+
+  const specialDates = [
+    // Utku
+    { start: '2025-10-20', end: '2025-10-24', color: 'orange', title: 'Utku: Atış Haftası' },
+    { start: '2025-11-03', end: '2025-11-07', color: 'red', title: 'Utku: Vize Sınavı' },
+    { start: '2025-12-29', end: '2026-01-02', color: 'red', title: 'Utku: Finaller' },
+    { start: '2026-01-12', end: '2026-01-23', color: 'green', title: 'Utku: İzin' },
+    { start: '2026-03-09', end: '2026-03-13', color: 'red', title: 'Utku: Bahar Vizeleri' },
+    { start: '2026-03-30', end: '2026-04-03', color: 'orange', title: 'Utku: Atış' },
+    { start: '2026-05-11', end: '2026-05-22', color: 'red', title: 'Utku: Bahar Finalleri' },
+    { start: '2026-06-01', end: '2026-06-22', color: 'green', title: 'Utku: İzin' },
+
+    // Şevval
+    { start: '2025-11-17', end: '2025-11-22', color: '#e57373', title: 'Şevval: Vize' },
+    { start: '2026-01-12', end: '2026-01-22', color: '#ef5350', title: 'Şevval: Final' },
+    { start: '2026-04-13', end: '2026-04-18', color: '#f06292', title: 'Şevval: Bahar Vize' },
+    { start: '2026-06-15', end: '2026-06-25', color: '#d32f2f', title: 'Şevval: Final Haftası' },
+
+    // Doğum günleri
+    { date: '2025-12-27', birthday: true, title: '🎂 Doğum Günü' },
+    { date: '2026-01-04', birthday: true, title: '🎂 Doğum Günü' },
+    { date: '2026-07-03', birthday: true, title: '🎂 Doğum Günü' },
+    { date: '2025-05-29', birthday: true, title: '🎂 Anne Doğum Günü' },
+    { date: '2026-03-08', birthday: true, title: '🎂 Anne Doğum Günü' }
+  ];
+
+  function isDateInRange(dateStr, startStr, endStr) {
+    const date = new Date(dateStr);
+    return date >= new Date(startStr) && date <= new Date(endStr);
+  }
+
+  function createCalendar(month, year) {
+    calendarDays.innerHTML = '';
+    calendarTitle.textContent = `${year} - ${month + 1}`;
+
+    const firstDay = new Date(year, month).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const dayNames = ['Pzr', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts'];
+    document.querySelector('.day-names').innerHTML = dayNames.map(day => `<div>${day}</div>`).join('');
+
+    // boş kutular (ayın ilk gününe kadar)
+    for (let i = 0; i < firstDay; i++) {
+      const empty = document.createElement('div');
+      calendarDays.appendChild(empty);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const dayDiv = document.createElement('div');
+      dayDiv.className = 'calendar-day';
+
+      let foundColor = null;
+      let titleText = '';
+      let isBirthday = false;
+
+      specialDates.forEach(item => {
+        if (item.date === dateStr && item.birthday) {
+          isBirthday = true;
+          foundColor = '#a1887f';
+          titleText = item.title;
+        } else if (item.start && item.end && isDateInRange(dateStr, item.start, item.end)) {
+          if (foundColor && foundColor !== item.color) {
+            foundColor = 'purple';
+            titleText = '💜 Kesişen Gün';
+          } else {
+            foundColor = item.color;
+            titleText = item.title;
+          }
+        }
+      });
+
+      if (foundColor) {
+        dayDiv.classList.add('special-day');
+        dayDiv.style.backgroundColor = foundColor;
+        dayDiv.setAttribute('data-tooltip', titleText);
+      }
+
+      if (isBirthday) {
+        dayDiv.textContent = `${day} 🎂`;
+      } else {
+        dayDiv.textContent = day;
+      }
+
+      if (day === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+        dayDiv.classList.add('today');
+      }
+
+      if (titleText) {
+        dayDiv.addEventListener('click', () => {
+          alert(`${dateStr}\n${titleText}`);
+        });
+      }
+
+      calendarDays.appendChild(dayDiv);
+    }
+  }
+
+  document.getElementById('prev-month').addEventListener('click', () => {
+    if (currentMonth === 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else {
+      currentMonth--;
+    }
+    createCalendar(currentMonth, currentYear);
+  });
+
+  document.getElementById('next-month').addEventListener('click', () => {
+    if (currentMonth === 11) {
+      currentMonth = 0;
+      currentYear++;
+    } else {
+      currentMonth++;
+    }
+    createCalendar(currentMonth, currentYear);
+  });
+
+  // Günaydın ekranı kapansın
+  const welcomeScreen = document.getElementById('welcome-screen');
+  if (welcomeScreen) {
+    welcomeScreen.addEventListener('click', () => {
+      welcomeScreen.style.display = 'none';
+    });
+  }
+
+  createCalendar(currentMonth, currentYear);
+});
