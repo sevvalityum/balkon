@@ -2,6 +2,32 @@
 document.getElementById('welcome-screen').addEventListener('click', () => {
   document.getElementById('welcome-screen').style.display = 'none';
 });
+const specialDates = [
+  // Utku
+  { start: '2025-10-20', end: '2025-10-24', color: 'orange', label: 'Atış' },
+  { start: '2025-11-03', end: '2025-11-07', color: 'red', label: 'Vize' },
+  { start: '2025-12-29', end: '2026-01-02', color: 'red', label: 'Final' },
+  { start: '2026-01-12', end: '2026-01-23', color: 'green', label: 'İzin' },
+  { start: '2026-03-09', end: '2026-03-13', color: 'red', label: 'Bahar Vize' },
+  { start: '2026-03-30', end: '2026-04-03', color: 'orange', label: 'Atış' },
+  { start: '2026-05-11', end: '2026-05-22', color: 'red', label: 'Final' },
+  { start: '2026-06-01', end: '2026-06-22', color: 'green', label: 'İzin' },
+
+  // Şevval (kırmızının tonlarıyla)
+  { start: '2025-11-17', end: '2025-11-22', color: '#e57373', label: 'Vize' },
+  { start: '2026-01-12', end: '2026-01-22', color: '#ef5350', label: 'Final' },
+  { start: '2026-04-13', end: '2026-04-18', color: '#f06292', label: 'Vize Bahar' },
+  { start: '2026-06-15', end: '2026-06-25', color: '#d32f2f', label: 'Final' },
+
+  // Kesişen günler → Mor olacak (override yapacağız)
+  // Doğum günleri
+  { date: '2026-03-08', birthday: true },
+  { date: '2025-05-29', birthday: true },
+  { date: '2026-07-03', birthday: true },
+  { date: '2025-12-27', birthday: true },
+  { date: '2026-01-04', birthday: true },
+];
+
 const remoteList = [
   {letter: "A", text:"Art exchange: Birbirinize çizimler veya dijital sanatlar gönderin."},
   {letter: "B", text:"Book club: Aynı kitabı okuyup tartışın."},
