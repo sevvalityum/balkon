@@ -1,1 +1,2 @@
 # balkon
+PROTOTİP 1 GELİŞMEYE AÇIK OLACAK
