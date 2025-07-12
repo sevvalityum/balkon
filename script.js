@@ -378,3 +378,54 @@ function createCalendar(year, month) {
 }
 
 createCalendar(currentYear, currentMonth);
+
+.calendar-day {
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  transition: transform 0.2s;
+  cursor: default;
+}
+
+.calendar-day:hover {
+  transform: scale(1.08);
+}
+
+.special-day {
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* Tooltip */
+.special-day::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.special-day:hover::after {
+  opacity: 1;
+}
+
+.today {
+  border: 2px solid #00ffff;
+  font-weight: 900;
+  box-shadow: 0 0 0 3px #00ffff60;
+}
+
