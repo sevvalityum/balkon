@@ -11,27 +11,30 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Günaydın */
+/* Günaydın Ekranı */
 #welcome-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #a7d7ff;
+  background-color: #a7d7ff;  /* Bebek mavisi tonları */
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'VT323', monospace;
+  font-family: 'VT323', monospace;  /* Pixel-art tarzı yazı tipi */
   font-size: 72px;
   color: white;
-  transition: opacity 1s ease;
+  cursor: pointer;
+  transition: opacity 0.8s ease;
 }
 
 #welcome-screen.fade-out {
   opacity: 0;
   pointer-events: none;
+}
+
 }
 
 /* Navbar */
